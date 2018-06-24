@@ -11,7 +11,8 @@ public class EventHandler {
 	public void onReady(ReadyEvent event) {
 		if (ZeroProgress.single) {
 			if (ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId) != null)
-				ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId).edit(Utils.createEmbet());
+				ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId)
+						.edit(Utils.createEmbet(Utils.getNumbers()));
 			ZeroProgress.client.logout();
 		} else
 			ZeroProgress.checker.start();
@@ -24,14 +25,27 @@ public class EventHandler {
 			if (checkCommand(event, ZeroProgress.getConfig().commands.setMessage)) {
 				if (ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId) != null)
 					ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId).delete();
-				ZeroProgress.client.getChannelByID(event.getChannel().getLongID()).sendMessage(Utils.createEmbet());
+				ZeroProgress.client.getChannelByID(event.getChannel().getLongID())
+						.sendMessage(Utils.createEmbet(Utils.getNumbers()));
+				if (ZeroProgress.getConfig().status)
+					ZeroProgress.client.changePlayingText(
+							ZeroProgress.getConfig().statusText.replace("{TIME}", Utils.getNumbers()));
 			} else if (checkCommand(event, ZeroProgress.getConfig().commands.update)) {
 				ZeroProgress.readerConfig.read();
 			} else if (checkCommand(event, ZeroProgress.getConfig().commands.recheck)) {
-				if (ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId) != null)
-					ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId).edit(Utils.createEmbet());
-				else
-					ZeroProgress.client.getChannelByID(event.getChannel().getLongID()).sendMessage(Utils.createEmbet());
+				if (ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId) != null) {
+					ZeroProgress.client.getMessageByID(ZeroProgress.getConfig().messageId)
+							.edit(Utils.createEmbet(Utils.getNumbers()));
+					if (ZeroProgress.getConfig().status)
+						ZeroProgress.client.changePlayingText(
+								ZeroProgress.getConfig().statusText.replace("{TIME}", Utils.getNumbers()));
+				} else {
+					ZeroProgress.client.getChannelByID(event.getChannel().getLongID())
+							.sendMessage(Utils.createEmbet(Utils.getNumbers()));
+					if (ZeroProgress.getConfig().status)
+						ZeroProgress.client.changePlayingText(
+								ZeroProgress.getConfig().statusText.replace("{TIME}", Utils.getNumbers()));
+				}
 			} else if (checkCommand(event, ZeroProgress.getConfig().commands.exit)) {
 				CheckerThread.flag = false;
 				ZeroProgress.client.logout();

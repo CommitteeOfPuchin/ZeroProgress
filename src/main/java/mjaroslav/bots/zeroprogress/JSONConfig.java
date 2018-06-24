@@ -27,6 +27,12 @@ public class JSONConfig {
 	@SerializedName("text")
 	public String text = "Лишь когда вы достигните показателя отклонения 1.000000, пред Вами разверзнутся Врата 0";
 
+	@SerializedName("status")
+	public boolean status = true;
+
+	@SerializedName("status_text")
+	public String statusText = "{TIME}";
+
 	@SerializedName("doc_id")
 	public String docId = "1WWEX5R1BZkgLyvhEcZw2NEIlmle6cYn6MfMWwmmd01g";
 
@@ -38,7 +44,7 @@ public class JSONConfig {
 
 	@SerializedName("color")
 	public String color = "FF9600";
-	
+
 	@SerializedName("commands")
 	public Commands commands = new Commands();
 

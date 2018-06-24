@@ -13,21 +13,23 @@ import sx.blah.discord.util.EmbedBuilder;
 
 public class Utils {
 	private static final int count = 12;
-	private static List<List<Object>> res;
-	private static String answer;
 
-	public static EmbedObject createEmbet() {
-		res = GoogleSheets.getFrom(ZeroProgress.getConfig().docId, ZeroProgress.getConfig().listId,
+	public static String getNumbers() {
+		List<List<Object>> res = GoogleSheets.getFrom(ZeroProgress.getConfig().docId, ZeroProgress.getConfig().listId,
 				ZeroProgress.getConfig().range);
-		answer = "";
+		String answer = "";
 		for (List<Object> list : res)
 			for (Object obj : list)
 				if (obj instanceof String)
 					answer += (String) obj;
+		return answer;
+	}
+
+	public static EmbedObject createEmbet(String numbers) {
 		return new EmbedBuilder().withAuthorName(ZeroProgress.getConfig().title).withDesc(ZeroProgress.getConfig().text)
 				.withAuthorUrl(ZeroProgress.getConfig().titleUrl).withThumbnail(ZeroProgress.getConfig().image)
 				.withTitle(ZeroProgress.getConfig().subTitle).withUrl(ZeroProgress.getConfig().subTitleUrl)
-				.withImage(createAndUploadImage(answer)).withColor(Utils.getColor(ZeroProgress.getConfig().color))
+				.withImage(createAndUploadImage(numbers)).withColor(Utils.getColor(ZeroProgress.getConfig().color))
 				.withTimestamp(new Date().getTime()).build();
 	}
 

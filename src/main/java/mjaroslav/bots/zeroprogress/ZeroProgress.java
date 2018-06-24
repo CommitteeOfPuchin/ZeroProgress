@@ -22,7 +22,9 @@ public class ZeroProgress {
 			single = true;
 		checker.setDaemon(true);
 		readerAuth.init();
+		readerAuth.write();
 		readerConfig.init();
+		readerConfig.write();
 		GoogleSheets.init();
 		if (getAuth().botToken != null && !getAuth().botToken.equals("")) {
 			login();
